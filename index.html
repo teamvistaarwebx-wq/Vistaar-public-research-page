@@ -245,84 +245,69 @@ svg{display:block}
   .gate__track:after{top:50%;bottom:auto;left:auto;right:0;transform:translateY(-50%);border:0;border-top:6px solid #0000;border-bottom:6px solid #0000;border-left:8px solid var(--color-brand)}
 }
 
-/* Practice areas */
-.dx{display:grid;gap:var(--space-7)}
-@media (width>=900px){
-  .dx{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(var(--space-7),7vw,140px);align-items:start}
-  .dx__intro-col{position:sticky;top:var(--space-7)}
+/* Practice areas: bento grid of image cards */
+.pa-head{display:grid;justify-items:start;gap:var(--space-5);margin-bottom:clamp(var(--space-6),4vw,56px)}
+.pa-head .section-lede{max-width:36rem}
+.pa-head .btn{min-width:min(100%,15rem);margin-top:var(--space-2)}
+.pa{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.pa__cell{display:grid}
+.pa__card{--split:100%;--pos:center;position:relative;display:flex;flex-direction:column;min-width:0;border:1px solid var(--color-line);border-radius:var(--radius-card);background:var(--color-surface);box-shadow:0 1px 0 #00000008,0 18px 40px -30px #00000059;overflow:hidden;isolation:isolate;transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.pa__body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:clamp(18px,1.6vw,26px)}
+.pa__num{display:flex;align-items:center;gap:12px;font-size:clamp(2.25rem,1.6rem + 1.2vw,2.75rem);font-weight:var(--fw-bold);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--color-ink)}
+.pa__num:after{content:"";width:clamp(22px,2vw,36px);height:2px;background:currentColor}
+.pa__num--red{color:var(--color-brand)}
+.pa__title{font-size:clamp(1.125rem,.95rem + .45vw,1.375rem);font-weight:var(--fw-semibold);line-height:1.12;letter-spacing:-.02em;text-wrap:balance}
+.pa__desc{max-width:26ch;font-size:.875rem;font-weight:var(--fw-medium);line-height:1.45;color:var(--color-text-soft)}
+.pa__new{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--radius-pill);background:rgb(var(--color-brand-rgb) / .09);color:var(--color-brand);font-size:.6875rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;line-height:1.2}
+.pa__new:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.6s ease-in-out infinite}
+.pa__go{display:grid;place-items:center;flex:none;width:42px;height:42px;margin-top:auto;border:1.5px solid var(--color-brand);border-radius:50%;color:var(--color-brand);transition:background-color .35s var(--ease-out),color .35s var(--ease-out),transform .35s var(--ease-out)}
+.pa__go .ico{width:18px;height:18px;stroke-width:2}
+.pa__go:after{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit}
+.pa__go:focus-visible{outline-offset:4px}
+.pa__media{position:relative;flex:1;min-height:200px;margin:0;overflow:hidden;transition:transform 1s var(--ease-out)}
+.pa__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos)}
+.js [data-reveal] .pa__media img{transform:scale(1.12);transition:transform 1.6s var(--ease-out) .15s}
+.js [data-reveal].is-visible .pa__media img{transform:none}
+.pa__card:hover{transform:translateY(-4px);box-shadow:0 1px 0 #00000008,0 30px 54px -30px #00000073}
+.pa__card:hover .pa__media{transform:scale(1.05)}
+.pa__card:hover .pa__go{background:var(--color-brand);color:var(--color-on-brand);transform:translateX(3px)}
+/* Red card */
+.pa__card--red{border-color:#0000;background:var(--color-brand);color:var(--color-on-brand)}
+.pa__card--red .pa__num{color:var(--color-on-brand)}
+.pa__card--red .pa__desc{color:#ffffffe0}
+.pa__card--red .pa__go{border-color:var(--color-on-brand);color:var(--color-on-brand)}
+.pa__card--red:hover .pa__go{background:var(--color-on-brand);color:var(--color-brand)}
+.pa__card--red :focus-visible{outline-color:var(--color-on-brand)}
+/* Feature card: larger type */
+.pa__card--feature .pa__title{font-size:clamp(1.5rem,.9rem + 1.3vw,2.25rem)}
+.pa__card--feature .pa__num{font-size:clamp(2.75rem,2rem + 1.8vw,4rem)}
+.pa__rule{width:48px;height:2px;margin-block:4px 6px;background:var(--color-brand)}
+
+/* Side-by-side cards: text on the left, picture filling the right */
+@media (width>=768px){
+  .pa{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pa__cell--c1{grid-column:1/-1}
+  .pa__card{flex-direction:row;min-height:300px}
+  .pa__body{width:var(--split);flex:none}
+  .pa__media{position:absolute;inset:0 0 0 var(--split);min-height:0}
+  .pa__card--h{--split:46%}
+  .pa__card--v{flex-direction:column}
+  .pa__card--v .pa__body{width:100%}
+  .pa__card--v .pa__media{position:relative;inset:auto;flex:1;min-height:170px}
 }
-.dx__intro-col{display:grid;justify-items:start;gap:var(--space-5)}
-.dx__title{max-width:16ch;font-size:var(--fs-h2);font-weight:var(--fw-semibold);line-height:var(--lh-heading);letter-spacing:-.02em;text-wrap:balance}
-.dx__intro{max-width:34rem;font-size:var(--fs-lead);font-weight:var(--fw-medium);line-height:var(--lh-body);color:var(--color-text)}
-.dx__cta{min-width:min(100%,15rem);margin-top:var(--space-2)}
-.px{--row-size:clamp(1.375rem,1rem + 1.5vw,2.375rem);--num-w:calc(var(--row-size) * .72);--px-gap:clamp(var(--space-4),2.6vw,40px);--px-dur:.65s;position:relative}
-.px__list{position:relative}
-.px__hl{position:absolute;top:0;left:calc(var(--space-4) * -1);right:calc(var(--space-4) * -1);height:0;border-radius:18px;background:var(--color-surface);opacity:0;pointer-events:none;transition:transform var(--px-dur) var(--ease-out),height var(--px-dur) var(--ease-out),opacity .3s var(--ease-out)}
-.px.has-hl .px__hl{opacity:1}
-.px__item{position:relative;border-bottom:1px solid var(--color-line);transition:border-color .4s var(--ease-out)}
-.px__item:last-child{border-bottom:0}
-.px__heading{margin:0;font:inherit}
-.px__trigger{position:relative;z-index:1;display:flex;align-items:center;gap:var(--px-gap);width:100%;padding:clamp(16px,1.6vw,24px) 0;border:0;background:none;text-align:left;cursor:pointer}
-.px__trigger:focus-visible{outline:none}
-.px__trigger:focus-visible .px__name{text-decoration:underline;text-decoration-color:var(--color-brand);text-decoration-thickness:2px;text-underline-offset:8px}
-.px__num{flex:none;width:var(--num-w);font-size:var(--row-size);font-weight:var(--fw-medium);line-height:1;font-variant-numeric:tabular-nums;color:color-mix(in srgb,var(--color-ink) 22%,transparent);transition:color .35s var(--ease-out)}
-.px__name{flex:1;min-width:0;font-size:var(--row-size);font-weight:var(--fw-semibold);line-height:1.08;letter-spacing:-.025em;color:var(--color-text-muted);text-wrap:balance;transition:color .35s var(--ease-out),transform var(--px-dur) var(--ease-out)}
-.px__arrow{display:grid;place-items:center;flex:none;width:44px;height:44px;border:1px solid var(--color-line);border-radius:50%;color:var(--color-ink);transform:rotate(-90deg);transition:transform var(--px-dur) var(--ease-out),background-color .35s var(--ease-out),border-color .35s var(--ease-out),color .35s var(--ease-out)}
-.px__arrow .ico{width:18px;height:18px;stroke-width:2}
-.px__trigger:hover .px__name{color:var(--color-ink)}
-.px__trigger:hover .px__num{color:color-mix(in srgb,var(--color-brand) 55%,transparent)}
-.px__body{position:relative;z-index:1;display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--px-dur) var(--ease-out)}
-.px__body-inner{min-height:0;overflow:hidden}
-.px__content{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;column-gap:var(--space-6);padding:0 0 clamp(20px,2vw,30px) calc(var(--num-w) + var(--px-gap) + 8px)}
-.px__text{display:grid;align-content:start;gap:var(--space-3);min-width:0;padding-top:2px}
-/* Image card: swap .px__media's contents for an <img> to use photography or 3D renders */
-.px__media-wrap{width:clamp(150px,13vw,196px);margin:4px 12px 0 0;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
-.px__item.is-open:hover .px__media-wrap{transform:rotate(4deg) scale(1.04)}
-.px__media{position:relative;width:100%;aspect-ratio:16/11;margin:0;border-radius:16px;overflow:hidden;background:radial-gradient(120% 95% at 18% 12%,#fff 0,#f4efea 46%,#e4d9cf 100%);box-shadow:0 22px 34px -20px #00000059,inset 0 0 0 1px #ffffffb3;opacity:0;transform-origin:30% 85%}
-.px__media img{width:100%;height:100%;object-fit:cover}
-.px__media-ring{position:absolute;right:-22%;bottom:-48%;width:78%;aspect-ratio:1;border-radius:50%;border:10px solid rgb(var(--color-brand-rgb) / .08)}
-.px__media-glow{position:absolute;left:50%;top:62%;width:58%;aspect-ratio:1;border-radius:50%;translate:-50% -50%;background:radial-gradient(circle,rgb(var(--color-brand-rgb) / .32),#0000 68%);filter:blur(6px)}
-.px__media-badge{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44%;aspect-ratio:1;border-radius:26%;translate:-50% -50%;background:linear-gradient(150deg,#e2494e 0%,var(--color-brand) 46%,#7a1215 100%);color:var(--color-on-brand);box-shadow:0 16px 22px -12px rgb(var(--color-brand-rgb) / .85),inset 0 2px 0 #ffffff66,inset 0 -8px 14px #00000038;overflow:hidden}
-.px__media-badge:after{content:"";position:absolute;inset:0 0 52%;background:linear-gradient(#ffffff47,#fff0)}
-.px__media-badge .ico{position:relative;width:50%;height:50%;stroke-width:1.6}
-@keyframes px-in{
-  0%{opacity:0;transform:translate(-20px,40px) rotate(-34deg) scale(.5);filter:blur(8px)}
-  55%{opacity:1;filter:blur(0)}
-  76%{transform:translate(0,-3px) rotate(3deg) scale(1.03)}
-  100%{opacity:1;transform:rotate(-4deg) scale(1);filter:blur(0)}
-}
-@keyframes px-out{
-  0%{opacity:1;transform:rotate(-4deg) scale(1);filter:blur(0)}
-  100%{opacity:0;transform:translate(24px,-16px) rotate(28deg) scale(.68);filter:blur(6px)}
-}
-@keyframes px-badge-in{
-  0%{opacity:0;transform:rotate(30deg) scale(.4)}
-  60%{opacity:1}
-  100%{opacity:1;transform:none}
-}
-.px__item.is-leaving .px__media{animation:px-out .45s var(--ease-out) both}
-.px__item.is-open .px__media{animation:px-in .95s var(--ease-out) .06s both}
-.px__item.is-open .px__media-badge{animation:px-badge-in .8s cubic-bezier(.34,1.56,.64,1) .2s both}
-.px__desc{max-width:34rem;font-size:clamp(1rem,.95rem + .25vw,1.125rem);font-weight:var(--fw-medium);color:var(--color-text-soft)}
-.px__covers{display:flex;flex-wrap:wrap;gap:var(--space-2)}
-.px__covers li{display:inline-flex;align-items:center;gap:var(--space-2);min-height:32px;padding:5px 14px 5px 12px;border-radius:var(--radius-pill);background:var(--color-bg);font-size:.8125rem;font-weight:var(--fw-semibold);letter-spacing:.03em;line-height:1.2;text-transform:uppercase;color:var(--color-text);box-shadow:0 0 0 1px var(--color-line)}
-.px__covers li:before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--color-brand)}
-.px__desc,.px__covers li{opacity:0;transform:translateY(12px);transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
-.px__item.is-open,.px__item:has(+ .px__item.is-open){border-bottom-color:#0000}
-.px__item.is-open .px__num{color:var(--color-brand)}
-.px__item.is-open .px__name{color:var(--color-ink);transform:translateX(8px)}
-.px__item.is-open .px__arrow{background:var(--color-brand);border-color:var(--color-brand);color:var(--color-on-brand);transform:none}
-.px__item.is-open .px__body{grid-template-rows:1fr}
-.px__item.is-open .px__desc,.px__item.is-open .px__covers li{opacity:1;transform:none;transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);transition-delay:calc(.16s + var(--k,0) * 55ms)}
-.px.no-anim,.px.no-anim *{transition:none!important}
-.badge{display:inline-flex;align-items:center;gap:6px;margin-left:.35em;padding:5px 10px;border-radius:var(--radius-pill);background:rgb(var(--color-brand-rgb) / .09);color:var(--color-brand);font-size:.6875rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);line-height:1.2;text-transform:uppercase;vertical-align:.45em;white-space:nowrap}
-.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.6s ease-in-out infinite}
-@media (width<=599px){
-  .px__hl{left:calc(var(--space-2) * -1);right:calc(var(--space-2) * -1);border-radius:12px}
-  .px__arrow{width:36px;height:36px}
-  .px__content{grid-template-columns:1fr;row-gap:var(--space-5);padding-left:calc(var(--num-w) + var(--px-gap))}
-  .px__media-wrap{width:150px}
-  .px__item.is-open .px__name{transform:none}
+@media (width>=1280px){
+  .pa{grid-template-columns:441fr 329fr 307fr 550fr;grid-template-rows:305fr 95fr 154fr 272fr;grid-template-areas:"c1 c1 c2 c3" "c1 c1 c2 c6" "c4 c5 c5 c6" "c4 c5 c5 c7"}
+  .pa__cell--c1{grid-area:c1}
+  .pa__card--c1{min-height:430px}
+  .pa__cell--c2{grid-area:c2}.pa__cell--c3{grid-area:c3}.pa__cell--c4{grid-area:c4}
+  .pa__cell--c5{grid-area:c5}.pa__cell--c6{grid-area:c6}.pa__cell--c7{grid-area:c7}
+  .pa__card--c1{--split:36%}
+  .pa__card--c3{--split:46%}
+  .pa__card--c4{--split:48%}
+  .pa__card--c5{--split:40%}
+  .pa__card--c6{--split:50%}
+  .pa__card--c7{--split:46%}
+  .pa__card--v .pa__media{flex:0 0 46%}
 }
 
 /* How we research: pipeline */
@@ -501,6 +486,7 @@ svg{display:block}
   <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
   <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></symbol>
   <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 11h7M8.5 15h7M8.5 18.5h4"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/><path d="M4 19.5A2 2 0 0 0 6 21h14v-4"/></symbol>
@@ -512,10 +498,6 @@ svg{display:block}
   <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7L16 9.8"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></symbol>
-  <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 10h16"/><path d="m12 3 8 5H4l8-5z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/><path d="M4 18h16"/></symbol>
-  <symbol id="i-heart-hand" viewBox="0 0 24 24"><path d="M12 11.5c-1.6-2.4-5.5-2-5.5 1 0 2.4 3.2 4.2 5.5 6 2.3-1.8 5.5-3.6 5.5-6 0-3-3.9-3.4-5.5-1z" transform="translate(0 -5)"/><path d="M3 15h3l3.5 2.5H14a1.5 1.5 0 0 1 0 3H9"/><path d="M14 17.5 19 15a1.6 1.6 0 0 1 2 2.4L15 21H6l-3-2"/></symbol>
-  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></symbol>
-  <symbol id="i-devices" viewBox="0 0 24 24"><rect x="2.5" y="4" width="15" height="10.5" rx="1.5"/><path d="M6.5 18h6"/><rect x="15.5" y="9" width="6" height="11" rx="1.5"/><path d="M18.5 17.5h.01"/></symbol>
   <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/></symbol>
   <symbol id="i-hand" viewBox="0 0 24 24"><path d="M7 10v11"/><path d="M15 5.9 14 10h5.8a2 2 0 0 1 2 2.3l-1.3 7A2 2 0 0 1 18.5 21H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h3l4-8a2.5 2.5 0 0 1 4 3.9z"/></symbol>
@@ -653,102 +635,101 @@ svg{display:block}
 
   <!-- Practice areas -->
   <section class="section section--flush-top practice" id="practice" aria-labelledby="practice-title">
-    <div class="container dx">
-      <div class="dx__intro-col">
+    <div class="container">
+      <header class="pa-head">
         <p class="eyebrow">Practice areas</p>
-        <h2 class="dx__title" id="practice-title">Seven practice areas.</h2>
-        <p class="dx__intro">From public programmes and social impact to brands, platforms and AI at work.</p>
-        <a class="btn btn--brand dx__cta" href="#contact">Discuss a research question</a>
-      </div>
+        <h2 class="section-title" id="practice-title">Seven practice areas.</h2>
+        <p class="section-lede">From public programmes and social impact to brands, platforms and AI at work.</p>
+        <a class="btn btn--brand" href="#contact">Discuss a research question</a>
+      </header>
 
-      <div class="px" data-px>
-      <span class="px__hl" aria-hidden="true"></span>
-      <ol class="px__list">
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-1" aria-expanded="false" aria-controls="px-body-1">
-              <span class="px__num" aria-hidden="true">1</span>
-              <span class="px__name">Impact &amp; Programme Evaluation</span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-1" role="region" aria-labelledby="px-btn-1">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><p class="px__desc">Did the intervention create meaningful outcomes?</p></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-target"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-2" aria-expanded="false" aria-controls="px-body-2">
-              <span class="px__num" aria-hidden="true">2</span>
-              <span class="px__name">Government &amp; Public Systems</span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-2" role="region" aria-labelledby="px-btn-2">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Programmes</li><li style="--k:1">Infrastructure</li><li style="--k:2">Water</li><li style="--k:3">Agriculture</li><li style="--k:4">Citizen communication</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-landmark"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-3" aria-expanded="false" aria-controls="px-body-3">
-              <span class="px__num" aria-hidden="true">3</span>
-              <span class="px__name">Development &amp; Social Impact</span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-3" role="region" aria-labelledby="px-btn-3">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">CSR</li><li style="--k:1">NGO</li><li style="--k:2">Livelihood programmes</li><li style="--k:3">Community programmes</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-heart-hand"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-4" aria-expanded="false" aria-controls="px-body-4">
-              <span class="px__num" aria-hidden="true">4</span>
-              <span class="px__name">Research Analysis</span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-4" role="region" aria-labelledby="px-btn-4">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><p class="px__desc">A structured layer over existing studies and data.</p></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-layers"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-5" aria-expanded="false" aria-controls="px-body-5">
-              <span class="px__num" aria-hidden="true">5</span>
-              <span class="px__name">Brand &amp; Consumer</span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-5" role="region" aria-labelledby="px-btn-5">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Perception</li><li style="--k:1">Trust</li><li style="--k:2">Journeys</li><li style="--k:3">Purchase behaviour</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-bag"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-6" aria-expanded="false" aria-controls="px-body-6">
-              <span class="px__num" aria-hidden="true">6</span>
-              <span class="px__name">Digital &amp; Platform</span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-6" role="region" aria-labelledby="px-btn-6">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Adoption</li><li style="--k:1">Search</li><li style="--k:2">Social</li><li style="--k:3">E-commerce behaviour</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-devices"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-        <li class="px__item" data-px-item>
-          <h3 class="px__heading">
-            <button class="px__trigger" type="button" id="px-btn-7" aria-expanded="false" aria-controls="px-body-7">
-              <span class="px__num" aria-hidden="true">7</span>
-              <span class="px__name">AI &amp; Future of Work <span class="badge">New in 2026</span></span>
-              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
-            </button>
-          </h3>
-          <div class="px__body" id="px-body-7" role="region" aria-labelledby="px-btn-7">
-            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Readiness</li><li style="--k:1">Knowledge systems</li><li style="--k:2">Human and AI workflows</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-sparkle"/></svg></span></figure></div></div></div>
-          </div>
-        </li>
-      </ol>
+      <div class="pa">
+        <div class="pa__cell pa__cell--c1" data-reveal style="--reveal-i:0">
+          <article class="pa__card pa__card--h pa__card--c1 pa__card--feature" style="--pos:20% 40%">
+            <div class="pa__body">
+              <p class="pa__num pa__num--red" aria-hidden="true">01</p>
+              <span class="pa__rule" aria-hidden="true"></span>
+              <h3 class="pa__title">Impact &amp; Programme Evaluation</h3>
+              <p class="pa__desc">Understand programme effectiveness, outcomes and measurable impact.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss Impact and Programme Evaluation"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/impact.jpg" alt="" width="504" height="402" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
+
+        <div class="pa__cell pa__cell--c2" data-reveal style="--reveal-i:1">
+          <article class="pa__card pa__card--v pa__card--c2" style="--pos:50% 60%">
+            <div class="pa__body">
+              <p class="pa__num" aria-hidden="true">02</p>
+              <h3 class="pa__title">Government &amp; Public Systems</h3>
+              <p class="pa__desc">Explore institutions, policies and systems for better public decisions.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss Government and Public Systems"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/government.jpg" alt="" width="294" height="178" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
+
+        <div class="pa__cell pa__cell--c3" data-reveal style="--reveal-i:2">
+          <article class="pa__card pa__card--h pa__card--c3" style="--pos:40% 60%">
+            <div class="pa__body">
+              <p class="pa__num pa__num--red" aria-hidden="true">03</p>
+              <h3 class="pa__title">Development &amp; Social Impact</h3>
+              <p class="pa__desc">Investigate social challenges and opportunities for meaningful change.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss Development and Social Impact"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/development.jpg" alt="" width="865" height="846" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
+
+        <div class="pa__cell pa__cell--c4" data-reveal style="--reveal-i:0">
+          <article class="pa__card pa__card--h pa__card--c4" style="--pos:20% 45%">
+            <div class="pa__body">
+              <p class="pa__num" aria-hidden="true">04</p>
+              <h3 class="pa__title">Research Analysis</h3>
+              <p class="pa__desc">Turn qualitative and quantitative evidence into actionable insights.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss Research Analysis"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/research-analysis.jpg" alt="" width="726" height="1232" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
+
+        <div class="pa__cell pa__cell--c5" data-reveal style="--reveal-i:1">
+          <article class="pa__card pa__card--h pa__card--c5 pa__card--red" style="--pos:30% 50%">
+            <div class="pa__body">
+              <p class="pa__num" aria-hidden="true">05</p>
+              <span class="pa__rule" style="background:#fff" aria-hidden="true"></span>
+              <h3 class="pa__title">Brand &amp; Consumer</h3>
+              <p class="pa__desc">Understand audience, behaviour, perceptions and changing needs.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss Brand and Consumer"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/brand-consumer.jpg" alt="" width="396" height="430" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
+
+        <div class="pa__cell pa__cell--c6" data-reveal style="--reveal-i:2">
+          <article class="pa__card pa__card--h pa__card--c6" style="--pos:20% 50%">
+            <div class="pa__body">
+              <p class="pa__num" aria-hidden="true">06</p>
+              <h3 class="pa__title">Digital &amp; Platform</h3>
+              <p class="pa__desc">Study digital experiences, platform ecosystems and emerging user behaviours.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss Digital and Platform"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/digital-platform.jpg" alt="" width="753" height="721" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
+
+        <div class="pa__cell pa__cell--c7" data-reveal style="--reveal-i:3">
+          <article class="pa__card pa__card--h pa__card--c7" style="--pos:60% 50%">
+            <div class="pa__body">
+              <p class="pa__num pa__num--red" aria-hidden="true">07</p>
+              <h3 class="pa__title">AI &amp; Future of Work</h3>
+              <span class="pa__new">New in 2026</span>
+              <p class="pa__desc">Explore AI adoption, evolving workplaces and human-centred technology.</p>
+              <a class="pa__go" href="#contact" aria-label="Discuss AI and Future of Work"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            </div>
+            <figure class="pa__media"><img src="assets/practice/ai-future-work.jpg" alt="" width="898" height="752" loading="lazy" decoding="async"></figure>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -937,66 +918,6 @@ svg{display:block}
     nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
   }
-
-  // Practice areas: expand-on-hover list with a sliding highlight
-  [].slice.call(document.querySelectorAll('[data-px]')).forEach(function(list){
-    var items=[].slice.call(list.querySelectorAll('[data-px-item]'));
-    var hl=list.querySelector('.px__hl');
-    var hover=window.matchMedia('(hover: hover) and (pointer: fine)');
-    var active=-1,lastX=null,lastY=null;
-    function place(){
-      if(active<0){list.classList.remove('has-hl');return}
-      // Final layout: rows above the open one are collapsed to their trigger height
-      var top=0;
-      for(var i=0;i<active;i++)top+=items[i].querySelector('.px__trigger').offsetHeight+1;
-      var it=items[active];
-      var h=it.querySelector('.px__trigger').offsetHeight+it.querySelector('.px__content').offsetHeight;
-      hl.style.transform='translateY('+top+'px)';
-      hl.style.height=h+'px';
-      list.classList.add('has-hl');
-    }
-    var leaveTimers=[];
-    function open(i){
-      if(i===active)return;
-      if(active>=0){
-        var prev=items[active];
-        prev.classList.add('is-leaving');
-        clearTimeout(leaveTimers[active]);
-        leaveTimers[active]=setTimeout(function(){prev.classList.remove('is-leaving')},500);
-      }
-      if(i>=0){clearTimeout(leaveTimers[i]);items[i].classList.remove('is-leaving')}
-      active=i;
-      items.forEach(function(it,j){
-        it.classList.toggle('is-open',j===i);
-        it.querySelector('.px__trigger').setAttribute('aria-expanded',String(j===i));
-      });
-      place();
-    }
-    items.forEach(function(it,i){
-      var btn=it.querySelector('.px__trigger');
-      btn.addEventListener('click',function(){
-        if(hover.matches)open(i);
-        else open(active===i?-1:i);
-      });
-      btn.addEventListener('focus',function(){
-        if(btn.matches(':focus-visible'))open(i);
-      });
-    });
-    // Only react to real pointer movement, so rows sliding under a still cursor don't trigger a cascade
-    list.addEventListener('pointermove',function(e){
-      if(!hover.matches||e.pointerType!=='mouse')return;
-      if(e.clientX===lastX&&e.clientY===lastY)return;
-      lastX=e.clientX;lastY=e.clientY;
-      var it=e.target.closest('[data-px-item]');
-      if(it)open(items.indexOf(it));
-    });
-    list.classList.add('no-anim');
-    open(0);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){list.classList.remove('no-anim')})});
-    if('ResizeObserver' in window)new ResizeObserver(place).observe(list);
-    window.addEventListener('resize',place);
-    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
-  });
 
   // Scroll-in sequences: armed only when they start below the fold, so the page is complete at rest
   (function(){
