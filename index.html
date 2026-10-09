@@ -53,9 +53,9 @@
   --font-sans:"Geist","Geist Variable",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;
   --fs-display:clamp(2.75rem,1.6rem + 4.4vw,5.25rem);
-  --fs-h2:clamp(2rem,1.45rem + 2.2vw,3.5rem);
+  --fs-h2:clamp(2rem,1.2rem + 3.4vw,3rem);
   --fs-h3:clamp(1.25rem,1.1rem + .6vw,1.5rem);
-  --fs-lead:clamp(1.0625rem,.98rem + .35vw,1.25rem);
+  --fs-lead:1.25rem;
   --fs-body:1rem;
   --fs-small:.875rem;
   --fs-eyebrow:clamp(.8125rem,.75rem + .25vw,1rem);
@@ -202,8 +202,8 @@ svg{display:block}
 .numbers{padding-bottom:var(--space-section)}
 .numbers__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6) var(--space-4)}
 @media (width>=1024px){.numbers__grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-6)}}
-.numbers__item{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:var(--space-3);padding-top:var(--space-5);border-top:1px solid var(--color-line)}
-.numbers__value{font-size:var(--fs-stat);font-weight:var(--fw-semibold);line-height:var(--lh-tight);letter-spacing:-.02em;color:var(--color-numeral);font-variant-numeric:tabular-nums}
+.numbers__item{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:var(--space-2)}
+.numbers__value{font-size:var(--fs-stat);font-weight:var(--fw-semibold);line-height:var(--lh-tight);letter-spacing:-.02em;color:var(--color-ink);font-variant-numeric:tabular-nums}
 .numbers__value .accent{color:var(--color-brand)}
 .numbers__label{font-size:var(--fs-body);font-weight:var(--fw-medium);color:var(--color-text)}
 
@@ -253,7 +253,7 @@ svg{display:block}
 }
 .dx__intro-col{display:grid;justify-items:start;gap:var(--space-5)}
 .dx__title{max-width:16ch;font-size:var(--fs-h2);font-weight:var(--fw-semibold);line-height:var(--lh-heading);letter-spacing:-.02em;text-wrap:balance}
-.dx__intro{max-width:34rem;font-size:var(--fs-body);line-height:1.55;color:var(--color-text)}
+.dx__intro{max-width:34rem;font-size:var(--fs-lead);font-weight:var(--fw-medium);line-height:var(--lh-body);color:var(--color-text)}
 .dx__cta{min-width:min(100%,15rem);margin-top:var(--space-2)}
 .px{--row-size:clamp(1.375rem,1rem + 1.5vw,2.375rem);--num-w:calc(var(--row-size) * .72);--px-gap:clamp(var(--space-4),2.6vw,40px);--px-dur:.65s;position:relative}
 .px__list{position:relative}
@@ -363,8 +363,8 @@ svg{display:block}
 .method__note{display:flex;flex-wrap:wrap;justify-content:center;gap:.25em .4em;margin-top:clamp(var(--space-7),5vw,72px);font-size:clamp(1.375rem,1.05rem + 1.3vw,2.25rem);font-weight:var(--fw-semibold);line-height:1.2;letter-spacing:-.02em;text-align:center;text-wrap:balance}
 .method__note .accent{color:var(--color-brand)}
 
-/* Pipeline scroll-in: each card slides in from the right after the arrow before it */
-.pipe.is-armed:not(.is-in) .pipe__stage{opacity:0;transform:translateX(80px)}
+/* Pipeline scroll-in: each card slides in from the left after the arrow before it */
+.pipe.is-armed:not(.is-in) .pipe__stage{opacity:0;transform:translateX(-80px)}
 .pipe.is-armed:not(.is-in) .pipe__stage:after{opacity:0;translate:-16px 0}
 .pipe.is-in .pipe__stage{transition:opacity .6s var(--ease-out),transform .9s var(--ease-out);transition-delay:calc(var(--s,0) * .42s)}
 .pipe.is-in .pipe__stage:after{transition:opacity .35s var(--ease-out),translate .5s var(--ease-out);transition-delay:calc(var(--s,0) * .42s + .3s)}
@@ -382,8 +382,6 @@ svg{display:block}
 .dim__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)}
 .dim__icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgb(var(--color-brand-rgb) / .08);color:var(--color-brand);transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),transform var(--dur-base) cubic-bezier(.34,1.6,.64,1)}
 .dim__icon .ico{width:22px;height:22px}
-.dim__count{font-size:.75rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);font-variant-numeric:tabular-nums;color:var(--color-text-muted)}
-.dim__count b{color:var(--color-brand);font-weight:inherit}
 .dim__num{position:absolute;right:-.04em;bottom:-.2em;z-index:-1;font-size:clamp(5rem,4rem + 3vw,7.5rem);font-weight:var(--fw-bold);line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:#0000;-webkit-text-stroke:1.5px rgb(var(--color-brand-rgb) / .14);pointer-events:none;transition:-webkit-text-stroke-color var(--dur-base) var(--ease-out),transform .6s var(--ease-out)}
 .dim__name{font-size:clamp(1.25rem,1.1rem + .5vw,1.5rem);font-weight:var(--fw-semibold);line-height:1.15;letter-spacing:-.02em}
 .dim__q{max-width:16rem;font-size:var(--fs-body);font-weight:var(--fw-medium);color:var(--color-text-soft)}
@@ -395,7 +393,6 @@ svg{display:block}
   .dim{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"icon name" "icon q";column-gap:var(--space-4);row-gap:2px;align-items:center}
   .dim__top{display:contents}
   .dim__icon{grid-area:icon}
-  .dim__count{display:none}
   .dim__name{grid-area:name}
   .dim__q{grid-area:q}
   .dim__num{font-size:4.5rem}
@@ -603,10 +600,10 @@ svg{display:block}
   <section class="numbers" aria-label="Vistaar Public Research at a glance">
     <div class="container">
       <dl class="numbers__grid">
-        <div class="numbers__item" data-reveal style="--reveal-i:0"><dt class="numbers__label">Practice areas</dt><dd class="numbers__value"><span data-count="7">7</span></dd></div>
-        <div class="numbers__item" data-reveal style="--reveal-i:1"><dt class="numbers__label">Research methods</dt><dd class="numbers__value"><span data-count="5">5</span></dd></div>
-        <div class="numbers__item" data-reveal style="--reveal-i:2"><dt class="numbers__label">Impact dimensions</dt><dd class="numbers__value"><span data-count="8">8</span></dd></div>
-        <div class="numbers__item" data-reveal style="--reveal-i:3"><dt class="numbers__label">Open publication formats</dt><dd class="numbers__value"><span data-count="4">4</span></dd></div>
+        <div class="numbers__item" data-reveal style="--reveal-i:0"><dt class="numbers__label">Practice areas</dt><dd class="numbers__value"><span data-count="7">7</span><span class="accent">+</span></dd></div>
+        <div class="numbers__item" data-reveal style="--reveal-i:1"><dt class="numbers__label">Research methods</dt><dd class="numbers__value"><span data-count="5">5</span><span class="accent">+</span></dd></div>
+        <div class="numbers__item" data-reveal style="--reveal-i:2"><dt class="numbers__label">Impact dimensions</dt><dd class="numbers__value"><span data-count="8">8</span><span class="accent">+</span></dd></div>
+        <div class="numbers__item" data-reveal style="--reveal-i:3"><dt class="numbers__label">Open publication formats</dt><dd class="numbers__value"><span data-count="4">4</span><span class="accent">+</span></dd></div>
       </dl>
     </div>
   </section>
@@ -814,14 +811,14 @@ svg{display:block}
       </header>
 
       <ol class="dims">
-        <li data-reveal style="--reveal-i:0"><div class="dim"><span class="dim__num" aria-hidden="true">1</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-target"/></svg></span><span class="dim__count" aria-hidden="true"><b>01</b> / 08</span></div><h3 class="dim__name">Relevance</h3><p class="dim__q">Solving the right problem?</p></div></li>
-        <li data-reveal style="--reveal-i:1"><div class="dim"><span class="dim__num" aria-hidden="true">2</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-users"/></svg></span><span class="dim__count" aria-hidden="true"><b>02</b> / 08</span></div><h3 class="dim__name">Reach</h3><p class="dim__q">Who received it?</p></div></li>
-        <li data-reveal style="--reveal-i:2"><div class="dim"><span class="dim__num" aria-hidden="true">3</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-hand"/></svg></span><span class="dim__count" aria-hidden="true"><b>03</b> / 08</span></div><h3 class="dim__name">Adoption</h3><p class="dim__q">Was it used or accepted?</p></div></li>
-        <li data-reveal style="--reveal-i:3"><div class="dim"><span class="dim__num" aria-hidden="true">4</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-trend"/></svg></span><span class="dim__count" aria-hidden="true"><b>04</b> / 08</span></div><h3 class="dim__name">Outcomes</h3><p class="dim__q">What changed?</p></div></li>
-        <li data-reveal style="--reveal-i:0"><div class="dim"><span class="dim__num" aria-hidden="true">5</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-flag"/></svg></span><span class="dim__count" aria-hidden="true"><b>05</b> / 08</span></div><h3 class="dim__name">Impact</h3><p class="dim__q">What longer-term difference?</p></div></li>
-        <li data-reveal style="--reveal-i:1"><div class="dim"><span class="dim__num" aria-hidden="true">6</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-leaf"/></svg></span><span class="dim__count" aria-hidden="true"><b>06</b> / 08</span></div><h3 class="dim__name">Sustainability</h3><p class="dim__q">Will the change last?</p></div></li>
-        <li data-reveal style="--reveal-i:2"><div class="dim"><span class="dim__num" aria-hidden="true">7</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-speaker"/></svg></span><span class="dim__count" aria-hidden="true"><b>07</b> / 08</span></div><h3 class="dim__name">Communication</h3><p class="dim__q">Did people understand it?</p></div></li>
-        <li data-reveal style="--reveal-i:3"><div class="dim"><span class="dim__num" aria-hidden="true">8</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-shield"/></svg></span><span class="dim__count" aria-hidden="true"><b>08</b> / 08</span></div><h3 class="dim__name">Evidence quality</h3><p class="dim__q">How strong is the evidence?</p></div></li>
+        <li data-reveal style="--reveal-i:0"><div class="dim"><span class="dim__num" aria-hidden="true">1</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-target"/></svg></span></div><h3 class="dim__name">Relevance</h3><p class="dim__q">Solving the right problem?</p></div></li>
+        <li data-reveal style="--reveal-i:1"><div class="dim"><span class="dim__num" aria-hidden="true">2</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-users"/></svg></span></div><h3 class="dim__name">Reach</h3><p class="dim__q">Who received it?</p></div></li>
+        <li data-reveal style="--reveal-i:2"><div class="dim"><span class="dim__num" aria-hidden="true">3</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-hand"/></svg></span></div><h3 class="dim__name">Adoption</h3><p class="dim__q">Was it used or accepted?</p></div></li>
+        <li data-reveal style="--reveal-i:3"><div class="dim"><span class="dim__num" aria-hidden="true">4</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-trend"/></svg></span></div><h3 class="dim__name">Outcomes</h3><p class="dim__q">What changed?</p></div></li>
+        <li data-reveal style="--reveal-i:0"><div class="dim"><span class="dim__num" aria-hidden="true">5</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-flag"/></svg></span></div><h3 class="dim__name">Impact</h3><p class="dim__q">What longer-term difference?</p></div></li>
+        <li data-reveal style="--reveal-i:1"><div class="dim"><span class="dim__num" aria-hidden="true">6</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-leaf"/></svg></span></div><h3 class="dim__name">Sustainability</h3><p class="dim__q">Will the change last?</p></div></li>
+        <li data-reveal style="--reveal-i:2"><div class="dim"><span class="dim__num" aria-hidden="true">7</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-speaker"/></svg></span></div><h3 class="dim__name">Communication</h3><p class="dim__q">Did people understand it?</p></div></li>
+        <li data-reveal style="--reveal-i:3"><div class="dim"><span class="dim__num" aria-hidden="true">8</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-shield"/></svg></span></div><h3 class="dim__name">Evidence quality</h3><p class="dim__q">How strong is the evidence?</p></div></li>
       </ol>
     </div>
   </section>
