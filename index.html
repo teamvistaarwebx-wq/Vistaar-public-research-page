@@ -251,7 +251,7 @@ svg{display:block}
 .pa-head .btn{min-width:min(100%,15rem);margin-top:var(--space-2)}
 .pa{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
 .pa__cell{display:grid}
-.pa__card{--split:100%;--pos:center;position:relative;display:flex;flex-direction:column;min-width:0;border:1px solid var(--color-line);border-radius:var(--radius-card);background:var(--color-surface);box-shadow:0 1px 0 #00000008,0 18px 40px -30px #00000059;overflow:hidden;isolation:isolate;transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.pa__card{--split:100%;--pos:center;position:relative;display:flex;flex-direction:column;min-width:0;border:1px solid var(--color-line);border-radius:var(--radius-card);background:var(--color-surface);box-shadow:0 1px 0 #00000008,0 18px 40px -30px #00000059;overflow:hidden;isolation:isolate}
 .pa__body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:clamp(18px,1.6vw,26px)}
 .pa__num{display:flex;align-items:center;gap:12px;font-size:clamp(2.25rem,1.6rem + 1.2vw,2.75rem);font-weight:var(--fw-bold);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--color-ink)}
 .pa__num:after{content:"";width:clamp(22px,2vw,36px);height:2px;background:currentColor}
@@ -260,24 +260,22 @@ svg{display:block}
 .pa__desc{max-width:26ch;font-size:.875rem;font-weight:var(--fw-medium);line-height:1.45;color:var(--color-text-soft)}
 .pa__new{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--radius-pill);background:rgb(var(--color-brand-rgb) / .09);color:var(--color-brand);font-size:.6875rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;line-height:1.2}
 .pa__new:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.6s ease-in-out infinite}
-.pa__go{display:grid;place-items:center;flex:none;width:42px;height:42px;margin-top:auto;border:1.5px solid var(--color-brand);border-radius:50%;color:var(--color-brand);transition:background-color .35s var(--ease-out),color .35s var(--ease-out),transform .35s var(--ease-out)}
-.pa__go .ico{width:18px;height:18px;stroke-width:2}
-.pa__go:after{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit}
-.pa__go:focus-visible{outline-offset:4px}
 .pa__media{position:relative;flex:1;min-height:200px;margin:0;overflow:hidden;transition:transform 1s var(--ease-out)}
 .pa__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos)}
 .js [data-reveal] .pa__media img{transform:scale(1.12);transition:transform 1.6s var(--ease-out) .15s}
 .js [data-reveal].is-visible .pa__media img{transform:none}
-.pa__card:hover{transform:translateY(-4px);box-shadow:0 1px 0 #00000008,0 30px 54px -30px #00000073}
+.pa__card:hover{transform:translateY(-4px)}
 .pa__card:hover .pa__media{transform:scale(1.05)}
-.pa__card:hover .pa__go{background:var(--color-brand);color:var(--color-on-brand);transform:translateX(3px)}
-/* Red card */
-.pa__card--red{border-color:#0000;background:var(--color-brand);color:var(--color-on-brand)}
-.pa__card--red .pa__num{color:var(--color-on-brand)}
-.pa__card--red .pa__desc{color:#ffffffe0}
-.pa__card--red .pa__go{border-color:var(--color-on-brand);color:var(--color-on-brand)}
-.pa__card--red:hover .pa__go{background:var(--color-on-brand);color:var(--color-brand)}
-.pa__card--red :focus-visible{outline-color:var(--color-on-brand)}
+.pa__card:hover /* Hover: the card turns brand red */
+.pa__card{transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),background-color .45s var(--ease-out),border-color .45s var(--ease-out),color .45s var(--ease-out)}
+.pa__num,.pa__desc,.pa__rule,.pa__new{transition:color .45s var(--ease-out),background-color .45s var(--ease-out)}
+@media (hover:hover){
+  .pa__card:hover{border-color:#0000;background:var(--color-brand);color:var(--color-on-brand);box-shadow:0 1px 0 #00000008,0 30px 54px -28px rgb(var(--color-brand-rgb) / .7)}
+  .pa__card:hover .pa__num{color:var(--color-on-brand)}
+  .pa__card:hover .pa__desc{color:#ffffffe0}
+  .pa__card:hover .pa__rule{background:var(--color-on-brand)}
+  .pa__card:hover .pa__new{background:var(--color-on-brand);color:var(--color-brand)}
+}
 /* Feature card: larger type */
 .pa__card--feature .pa__title{font-size:clamp(1.5rem,.9rem + 1.3vw,2.25rem)}
 .pa__card--feature .pa__num{font-size:clamp(2.75rem,2rem + 1.8vw,4rem)}
@@ -307,7 +305,7 @@ svg{display:block}
   .pa__card--c5{--split:40%}
   .pa__card--c6{--split:50%}
   .pa__card--c7{--split:46%}
-  .pa__card--v .pa__media{flex:0 0 46%}
+  .pa__card--v .pa__media{flex:1 1 auto;min-height:46%}
 }
 
 /* How we research: pipeline */
@@ -486,7 +484,6 @@ svg{display:block}
   <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></symbol>
-  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
   <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></symbol>
   <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 11h7M8.5 15h7M8.5 18.5h4"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/><path d="M4 19.5A2 2 0 0 0 6 21h14v-4"/></symbol>
@@ -651,7 +648,6 @@ svg{display:block}
               <span class="pa__rule" aria-hidden="true"></span>
               <h3 class="pa__title">Impact &amp; Programme Evaluation</h3>
               <p class="pa__desc">Understand programme effectiveness, outcomes and measurable impact.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss Impact and Programme Evaluation"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/impact.jpg" alt="" width="504" height="402" loading="lazy" decoding="async"></figure>
           </article>
@@ -663,7 +659,6 @@ svg{display:block}
               <p class="pa__num" aria-hidden="true">02</p>
               <h3 class="pa__title">Government &amp; Public Systems</h3>
               <p class="pa__desc">Explore institutions, policies and systems for better public decisions.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss Government and Public Systems"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/government.jpg" alt="" width="294" height="178" loading="lazy" decoding="async"></figure>
           </article>
@@ -675,7 +670,6 @@ svg{display:block}
               <p class="pa__num pa__num--red" aria-hidden="true">03</p>
               <h3 class="pa__title">Development &amp; Social Impact</h3>
               <p class="pa__desc">Investigate social challenges and opportunities for meaningful change.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss Development and Social Impact"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/development.jpg" alt="" width="865" height="846" loading="lazy" decoding="async"></figure>
           </article>
@@ -687,20 +681,18 @@ svg{display:block}
               <p class="pa__num" aria-hidden="true">04</p>
               <h3 class="pa__title">Research Analysis</h3>
               <p class="pa__desc">Turn qualitative and quantitative evidence into actionable insights.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss Research Analysis"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/research-analysis.jpg" alt="" width="726" height="1232" loading="lazy" decoding="async"></figure>
           </article>
         </div>
 
         <div class="pa__cell pa__cell--c5" data-reveal style="--reveal-i:1">
-          <article class="pa__card pa__card--h pa__card--c5 pa__card--red" style="--pos:30% 50%">
+          <article class="pa__card pa__card--h pa__card--c5" style="--pos:30% 50%">
             <div class="pa__body">
               <p class="pa__num" aria-hidden="true">05</p>
-              <span class="pa__rule" style="background:#fff" aria-hidden="true"></span>
+              <span class="pa__rule" aria-hidden="true"></span>
               <h3 class="pa__title">Brand &amp; Consumer</h3>
               <p class="pa__desc">Understand audience, behaviour, perceptions and changing needs.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss Brand and Consumer"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/brand-consumer.jpg" alt="" width="396" height="430" loading="lazy" decoding="async"></figure>
           </article>
@@ -712,7 +704,6 @@ svg{display:block}
               <p class="pa__num" aria-hidden="true">06</p>
               <h3 class="pa__title">Digital &amp; Platform</h3>
               <p class="pa__desc">Study digital experiences, platform ecosystems and emerging user behaviours.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss Digital and Platform"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/digital-platform.jpg" alt="" width="753" height="721" loading="lazy" decoding="async"></figure>
           </article>
@@ -725,7 +716,6 @@ svg{display:block}
               <h3 class="pa__title">AI &amp; Future of Work</h3>
               <span class="pa__new">New in 2026</span>
               <p class="pa__desc">Explore AI adoption, evolving workplaces and human-centred technology.</p>
-              <a class="pa__go" href="#contact" aria-label="Discuss AI and Future of Work"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
             <figure class="pa__media"><img src="assets/practice/ai-future-work.jpg" alt="" width="898" height="752" loading="lazy" decoding="async"></figure>
           </article>
