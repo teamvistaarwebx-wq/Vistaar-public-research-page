@@ -255,25 +255,45 @@ svg{display:block}
 .dx__title{max-width:16ch;font-size:var(--fs-h2);font-weight:var(--fw-semibold);line-height:var(--lh-heading);letter-spacing:-.02em;text-wrap:balance}
 .dx__intro{max-width:34rem;font-size:var(--fs-body);line-height:1.55;color:var(--color-text)}
 .dx__cta{min-width:min(100%,15rem);margin-top:var(--space-2)}
-.px__list{--row-size:clamp(1.375rem,1rem + 1.5vw,2.375rem)}
-.px__item{position:relative;display:flex;align-items:baseline;gap:clamp(var(--space-4),2.6vw,40px);padding-block:clamp(18px,1.8vw,28px);border-bottom:1px solid var(--color-line)}
+.px{--row-size:clamp(1.375rem,1rem + 1.5vw,2.375rem);--num-w:calc(var(--row-size) * .72);--px-gap:clamp(var(--space-4),2.6vw,40px);--px-dur:.65s;position:relative}
+.px__list{position:relative}
+.px__hl{position:absolute;top:0;left:calc(var(--space-4) * -1);right:calc(var(--space-4) * -1);height:0;border-radius:18px;background:var(--color-surface);opacity:0;pointer-events:none;transition:transform var(--px-dur) var(--ease-out),height var(--px-dur) var(--ease-out),opacity .3s var(--ease-out)}
+.px.has-hl .px__hl{opacity:1}
+.px__item{position:relative;border-bottom:1px solid var(--color-line);transition:border-color .4s var(--ease-out)}
 .px__item:last-child{border-bottom:0}
-.px__item:before{content:"";position:absolute;inset:0 calc(var(--space-3) * -1);z-index:0;border-radius:14px;background:var(--color-surface);opacity:0;transform:scaleY(.92);transition:opacity .4s var(--ease-out),transform .5s var(--ease-out);pointer-events:none}
-.px__item:hover:before{opacity:1;transform:none}
-.px__num{position:relative;z-index:1;flex:none;width:1.1ch;font-size:var(--row-size);font-weight:var(--fw-medium);line-height:1;font-variant-numeric:tabular-nums;color:color-mix(in srgb,var(--color-ink) 24%,transparent);transition:color .35s var(--ease-out)}
-.px__main{position:relative;z-index:1;display:grid;gap:var(--space-3);min-width:0;transition:transform .45s var(--ease-out)}
-.px__name{font-size:var(--row-size);font-weight:var(--fw-semibold);line-height:1.08;letter-spacing:-.025em;text-wrap:balance}
+.px__heading{margin:0;font:inherit}
+.px__trigger{position:relative;z-index:1;display:flex;align-items:center;gap:var(--px-gap);width:100%;padding:clamp(16px,1.6vw,24px) 0;border:0;background:none;text-align:left;cursor:pointer}
+.px__trigger:focus-visible{outline:none}
+.px__trigger:focus-visible .px__name{text-decoration:underline;text-decoration-color:var(--color-brand);text-decoration-thickness:2px;text-underline-offset:8px}
+.px__num{flex:none;width:var(--num-w);font-size:var(--row-size);font-weight:var(--fw-medium);line-height:1;font-variant-numeric:tabular-nums;color:color-mix(in srgb,var(--color-ink) 22%,transparent);transition:color .35s var(--ease-out)}
+.px__name{flex:1;min-width:0;font-size:var(--row-size);font-weight:var(--fw-semibold);line-height:1.08;letter-spacing:-.025em;color:var(--color-text-muted);text-wrap:balance;transition:color .35s var(--ease-out),transform var(--px-dur) var(--ease-out)}
+.px__arrow{display:grid;place-items:center;flex:none;width:44px;height:44px;border:1px solid var(--color-line);border-radius:50%;color:var(--color-ink);transform:rotate(-90deg);transition:transform var(--px-dur) var(--ease-out),background-color .35s var(--ease-out),border-color .35s var(--ease-out),color .35s var(--ease-out)}
+.px__arrow .ico{width:18px;height:18px;stroke-width:2}
+.px__trigger:hover .px__name{color:var(--color-ink)}
+.px__trigger:hover .px__num{color:color-mix(in srgb,var(--color-brand) 55%,transparent)}
+.px__body{position:relative;z-index:1;display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--px-dur) var(--ease-out)}
+.px__body-inner{min-height:0;overflow:hidden}
+.px__content{display:grid;gap:var(--space-3);padding:0 calc(44px + var(--px-gap)) clamp(18px,1.8vw,28px) calc(var(--num-w) + var(--px-gap) + 8px)}
 .px__desc{max-width:34rem;font-size:clamp(1rem,.95rem + .25vw,1.125rem);font-weight:var(--fw-medium);color:var(--color-text-soft)}
-.px__covers{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);font-size:var(--fs-small);font-weight:var(--fw-medium);letter-spacing:.04em;line-height:1.3;text-transform:uppercase;color:var(--color-text)}
-.px__covers li{display:inline-flex;align-items:center;gap:var(--space-2)}
+.px__covers{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.px__covers li{display:inline-flex;align-items:center;gap:var(--space-2);min-height:32px;padding:5px 14px 5px 12px;border-radius:var(--radius-pill);background:var(--color-bg);font-size:.8125rem;font-weight:var(--fw-semibold);letter-spacing:.03em;line-height:1.2;text-transform:uppercase;color:var(--color-text);box-shadow:0 0 0 1px var(--color-line)}
 .px__covers li:before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--color-brand)}
-.px__item:hover .px__num{color:var(--color-brand)}
-.px__item:hover .px__main{transform:translateX(6px)}
+.px__desc,.px__covers li{opacity:0;transform:translateY(12px);transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
+.px__item.is-open,.px__item:has(+ .px__item.is-open){border-bottom-color:#0000}
+.px__item.is-open .px__num{color:var(--color-brand)}
+.px__item.is-open .px__name{color:var(--color-ink);transform:translateX(8px)}
+.px__item.is-open .px__arrow{background:var(--color-brand);border-color:var(--color-brand);color:var(--color-on-brand);transform:none}
+.px__item.is-open .px__body{grid-template-rows:1fr}
+.px__item.is-open .px__desc,.px__item.is-open .px__covers li{opacity:1;transform:none;transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);transition-delay:calc(.16s + var(--k,0) * 55ms)}
+.px.no-anim,.px.no-anim *{transition:none!important}
 .badge{display:inline-flex;align-items:center;gap:6px;margin-left:.35em;padding:5px 10px;border-radius:var(--radius-pill);background:rgb(var(--color-brand-rgb) / .09);color:var(--color-brand);font-size:.6875rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);line-height:1.2;text-transform:uppercase;vertical-align:.45em;white-space:nowrap}
 .badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.6s ease-in-out infinite}
 @media (width<=599px){
-  .px__item:before{inset:0 calc(var(--space-2) * -1);border-radius:10px}
-  .px__covers{gap:var(--space-2) var(--space-4)}
+  .px__hl{left:calc(var(--space-2) * -1);right:calc(var(--space-2) * -1);border-radius:12px}
+  .px__arrow{width:36px;height:36px}
+  .px__content{padding-right:0;padding-left:calc(var(--num-w) + var(--px-gap))}
+  .px__item.is-open .px__name{transform:none}
+}
 }
 
 /* How we research: pipeline */
@@ -565,57 +585,95 @@ svg{display:block}
         <a class="btn btn--brand dx__cta" href="#contact">Discuss a research question</a>
       </div>
 
+      <div class="px" data-px>
+      <span class="px__hl" aria-hidden="true"></span>
       <ol class="px__list">
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">1</span>
-          <div class="px__main">
-            <h3 class="px__name">Impact &amp; Programme Evaluation</h3>
-            <p class="px__desc">Did the intervention create meaningful outcomes?</p>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-1" aria-expanded="false" aria-controls="px-body-1">
+              <span class="px__num" aria-hidden="true">1</span>
+              <span class="px__name">Impact &amp; Programme Evaluation</span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-1" role="region" aria-labelledby="px-btn-1">
+            <div class="px__body-inner"><div class="px__content"><p class="px__desc">Did the intervention create meaningful outcomes?</p></div></div>
           </div>
         </li>
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">2</span>
-          <div class="px__main">
-            <h3 class="px__name">Government &amp; Public Systems</h3>
-            <ul class="px__covers"><li>Programmes</li><li>Infrastructure</li><li>Water</li><li>Agriculture</li><li>Citizen communication</li></ul>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-2" aria-expanded="false" aria-controls="px-body-2">
+              <span class="px__num" aria-hidden="true">2</span>
+              <span class="px__name">Government &amp; Public Systems</span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-2" role="region" aria-labelledby="px-btn-2">
+            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Programmes</li><li style="--k:1">Infrastructure</li><li style="--k:2">Water</li><li style="--k:3">Agriculture</li><li style="--k:4">Citizen communication</li></ul></div></div>
           </div>
         </li>
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">3</span>
-          <div class="px__main">
-            <h3 class="px__name">Development &amp; Social Impact</h3>
-            <ul class="px__covers"><li>CSR</li><li>NGO</li><li>Livelihood programmes</li><li>Community programmes</li></ul>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-3" aria-expanded="false" aria-controls="px-body-3">
+              <span class="px__num" aria-hidden="true">3</span>
+              <span class="px__name">Development &amp; Social Impact</span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-3" role="region" aria-labelledby="px-btn-3">
+            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">CSR</li><li style="--k:1">NGO</li><li style="--k:2">Livelihood programmes</li><li style="--k:3">Community programmes</li></ul></div></div>
           </div>
         </li>
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">4</span>
-          <div class="px__main">
-            <h3 class="px__name">Research Analysis</h3>
-            <p class="px__desc">A structured layer over existing studies and data.</p>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-4" aria-expanded="false" aria-controls="px-body-4">
+              <span class="px__num" aria-hidden="true">4</span>
+              <span class="px__name">Research Analysis</span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-4" role="region" aria-labelledby="px-btn-4">
+            <div class="px__body-inner"><div class="px__content"><p class="px__desc">A structured layer over existing studies and data.</p></div></div>
           </div>
         </li>
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">5</span>
-          <div class="px__main">
-            <h3 class="px__name">Brand &amp; Consumer</h3>
-            <ul class="px__covers"><li>Perception</li><li>Trust</li><li>Journeys</li><li>Purchase behaviour</li></ul>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-5" aria-expanded="false" aria-controls="px-body-5">
+              <span class="px__num" aria-hidden="true">5</span>
+              <span class="px__name">Brand &amp; Consumer</span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-5" role="region" aria-labelledby="px-btn-5">
+            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Perception</li><li style="--k:1">Trust</li><li style="--k:2">Journeys</li><li style="--k:3">Purchase behaviour</li></ul></div></div>
           </div>
         </li>
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">6</span>
-          <div class="px__main">
-            <h3 class="px__name">Digital &amp; Platform</h3>
-            <ul class="px__covers"><li>Adoption</li><li>Search</li><li>Social</li><li>E-commerce behaviour</li></ul>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-6" aria-expanded="false" aria-controls="px-body-6">
+              <span class="px__num" aria-hidden="true">6</span>
+              <span class="px__name">Digital &amp; Platform</span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-6" role="region" aria-labelledby="px-btn-6">
+            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Adoption</li><li style="--k:1">Search</li><li style="--k:2">Social</li><li style="--k:3">E-commerce behaviour</li></ul></div></div>
           </div>
         </li>
-        <li class="px__item">
-          <span class="px__num" aria-hidden="true">7</span>
-          <div class="px__main">
-            <h3 class="px__name">AI &amp; Future of Work <span class="badge">New in 2026</span></h3>
-            <ul class="px__covers"><li>Readiness</li><li>Knowledge systems</li><li>Human and AI workflows</li></ul>
+        <li class="px__item" data-px-item>
+          <h3 class="px__heading">
+            <button class="px__trigger" type="button" id="px-btn-7" aria-expanded="false" aria-controls="px-body-7">
+              <span class="px__num" aria-hidden="true">7</span>
+              <span class="px__name">AI &amp; Future of Work <span class="badge">New in 2026</span></span>
+              <span class="px__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg></span>
+            </button>
+          </h3>
+          <div class="px__body" id="px-body-7" role="region" aria-labelledby="px-btn-7">
+            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Readiness</li><li style="--k:1">Knowledge systems</li><li style="--k:2">Human and AI workflows</li></ul></div></div>
           </div>
         </li>
       </ol>
+      </div>
     </div>
   </section>
 
@@ -792,6 +850,58 @@ svg{display:block}
     nav.addEventListener('click',function(e){if(e.target.closest('a'))close()});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
   }
+
+  // Practice areas: expand-on-hover list with a sliding highlight
+  [].slice.call(document.querySelectorAll('[data-px]')).forEach(function(list){
+    var items=[].slice.call(list.querySelectorAll('[data-px-item]'));
+    var hl=list.querySelector('.px__hl');
+    var hover=window.matchMedia('(hover: hover) and (pointer: fine)');
+    var active=-1,lastX=null,lastY=null;
+    function place(){
+      if(active<0){list.classList.remove('has-hl');return}
+      // Final layout: rows above the open one are collapsed to their trigger height
+      var top=0;
+      for(var i=0;i<active;i++)top+=items[i].querySelector('.px__trigger').offsetHeight+1;
+      var it=items[active];
+      var h=it.querySelector('.px__trigger').offsetHeight+it.querySelector('.px__body-inner').scrollHeight;
+      hl.style.transform='translateY('+top+'px)';
+      hl.style.height=h+'px';
+      list.classList.add('has-hl');
+    }
+    function open(i){
+      if(i===active)return;
+      active=i;
+      items.forEach(function(it,j){
+        it.classList.toggle('is-open',j===i);
+        it.querySelector('.px__trigger').setAttribute('aria-expanded',String(j===i));
+      });
+      place();
+    }
+    items.forEach(function(it,i){
+      var btn=it.querySelector('.px__trigger');
+      btn.addEventListener('click',function(){
+        if(hover.matches)open(i);
+        else open(active===i?-1:i);
+      });
+      btn.addEventListener('focus',function(){
+        if(btn.matches(':focus-visible'))open(i);
+      });
+    });
+    // Only react to real pointer movement, so rows sliding under a still cursor don't trigger a cascade
+    list.addEventListener('pointermove',function(e){
+      if(!hover.matches||e.pointerType!=='mouse')return;
+      if(e.clientX===lastX&&e.clientY===lastY)return;
+      lastX=e.clientX;lastY=e.clientY;
+      var it=e.target.closest('[data-px-item]');
+      if(it)open(items.indexOf(it));
+    });
+    list.classList.add('no-anim');
+    open(0);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){list.classList.remove('no-anim')})});
+    if('ResizeObserver' in window)new ResizeObserver(place).observe(list);
+    window.addEventListener('resize',place);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
+  });
 
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var reveal=[].slice.call(document.querySelectorAll('[data-reveal]'));
