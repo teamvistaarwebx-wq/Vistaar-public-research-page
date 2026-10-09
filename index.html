@@ -360,49 +360,95 @@ svg{display:block}
   .pipe__stage:first-child .pipe__methods{grid-template-columns:1fr}
   .pipe__stage:not(:last-child):after{top:50%;left:calc(100% + 10px);transform:translateY(-50%)}
 }
-.ai-note{position:relative;display:grid;gap:var(--space-5);margin-top:var(--space-4);padding:clamp(28px,4.6vw,72px);border-radius:var(--radius-lg);background:var(--color-ink);color:var(--color-on-brand);overflow:hidden}
-.ai-note__glow{position:absolute;inset:-60% -10% auto auto;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgb(var(--color-brand-rgb) / .55),#0000 65%);pointer-events:none}
-.ai-note__text{position:relative;display:grid;gap:.1em;font-size:clamp(2rem,1.1rem + 3.6vw,4.5rem);font-weight:var(--fw-bold);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
-.ai-note__tail{color:#0000;-webkit-text-stroke:1.5px var(--color-on-brand)}
-@supports not (-webkit-text-stroke:1px #fff){.ai-note__tail{color:#ffffffb3}}
-@media (width>=1200px){.ai-note{grid-template-columns:minmax(0,3fr) minmax(0,9fr);align-items:end}}
+.method__note{display:flex;flex-wrap:wrap;justify-content:center;gap:.25em .4em;margin-top:clamp(var(--space-7),5vw,72px);font-size:clamp(1.375rem,1.05rem + 1.3vw,2.25rem);font-weight:var(--fw-semibold);line-height:1.2;letter-spacing:-.02em;text-align:center;text-wrap:balance}
+.method__note .accent{color:var(--color-brand)}
+
+/* Pipeline scroll-in: each card slides in from the right after the arrow before it */
+.pipe.is-armed:not(.is-in) .pipe__stage{opacity:0;transform:translateX(80px)}
+.pipe.is-armed:not(.is-in) .pipe__stage:after{opacity:0;translate:-16px 0}
+.pipe.is-in .pipe__stage{transition:opacity .6s var(--ease-out),transform .9s var(--ease-out);transition-delay:calc(var(--s,0) * .42s)}
+.pipe.is-in .pipe__stage:after{transition:opacity .35s var(--ease-out),translate .5s var(--ease-out);transition-delay:calc(var(--s,0) * .42s + .3s)}
+@media (width<=1023px){.pipe.is-armed:not(.is-in) .pipe__stage:after{translate:0 -12px}}
+.pipe.is-in .pipe__stage--end{animation:pipe-land .7s var(--ease-out) 1.55s both}
+@keyframes pipe-land{40%{box-shadow:0 0 0 10px rgb(var(--color-brand-rgb) / .14)}100%{box-shadow:0 0 0 0 rgb(var(--color-brand-rgb) / 0)}}
 
 /* Impact framework */
 .dims{display:grid;gap:var(--space-3)}
 @media (width>=560px){.dims{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (width>=1024px){.dims{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-4)}}
 .dims>li{display:grid}
-.dim{display:flex;flex-direction:column;gap:var(--space-2);min-height:clamp(200px,17vw,250px);padding:clamp(20px,2vw,28px);border-radius:var(--radius-card);background:var(--color-surface);transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
-.dim__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:auto;padding-bottom:var(--space-5)}
-.dim__num{font-size:var(--fs-small);font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);font-variant-numeric:tabular-nums;color:var(--color-brand);transition:color var(--dur-base) var(--ease-out)}
-.dim__icon{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--color-bg);color:var(--color-ink);transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),transform var(--dur-base) cubic-bezier(.34,1.6,.64,1)}
+.dim{position:relative;display:grid;align-content:start;gap:6px;padding:clamp(20px,1.8vw,26px);border:1px solid var(--color-line);border-radius:var(--radius-card);background:linear-gradient(180deg,#fff 0%,#fbfaf8 100%);box-shadow:0 1px 0 #00000008,0 18px 36px -26px #00000052;overflow:hidden;isolation:isolate;transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out)}
+.dim:after{content:"";position:absolute;inset:auto 0 0;height:3px;background:var(--color-brand);transform:scaleX(0);transform-origin:0 50%;transition:transform .6s var(--ease-out)}
+.dim__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)}
+.dim__icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgb(var(--color-brand-rgb) / .08);color:var(--color-brand);transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),transform var(--dur-base) cubic-bezier(.34,1.6,.64,1)}
 .dim__icon .ico{width:22px;height:22px}
-.dim__name{font-size:clamp(1.25rem,1.1rem + .6vw,1.625rem);font-weight:var(--fw-semibold);line-height:1.15;letter-spacing:-.02em}
-.dim__q{font-size:var(--fs-body);font-weight:var(--fw-medium);color:var(--color-text-soft);transition:color var(--dur-base) var(--ease-out)}
+.dim__count{font-size:.75rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);font-variant-numeric:tabular-nums;color:var(--color-text-muted)}
+.dim__count b{color:var(--color-brand);font-weight:inherit}
+.dim__num{position:absolute;right:-.04em;bottom:-.2em;z-index:-1;font-size:clamp(5rem,4rem + 3vw,7.5rem);font-weight:var(--fw-bold);line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:#0000;-webkit-text-stroke:1.5px rgb(var(--color-brand-rgb) / .14);pointer-events:none;transition:-webkit-text-stroke-color var(--dur-base) var(--ease-out),transform .6s var(--ease-out)}
+.dim__name{font-size:clamp(1.25rem,1.1rem + .5vw,1.5rem);font-weight:var(--fw-semibold);line-height:1.15;letter-spacing:-.02em}
+.dim__q{max-width:16rem;font-size:var(--fs-body);font-weight:var(--fw-medium);color:var(--color-text-soft)}
+.dim:hover{transform:translateY(-4px);border-color:rgb(var(--color-brand-rgb) / .35);box-shadow:0 1px 0 #00000008,0 28px 48px -26px rgb(var(--color-brand-rgb) / .45)}
+.dim:hover:after{transform:scaleX(1)}
+.dim:hover .dim__icon{background:var(--color-brand);color:var(--color-on-brand);transform:rotate(-8deg) scale(1.06)}
+.dim:hover .dim__num{-webkit-text-stroke-color:rgb(var(--color-brand-rgb) / .4);transform:translateY(-6px)}
 @media (width<=559px){
-  .dim{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"num icon" "name icon" "q icon";align-items:center;column-gap:var(--space-4);row-gap:4px;min-height:0}
+  .dim{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"icon name" "icon q";column-gap:var(--space-4);row-gap:2px;align-items:center}
   .dim__top{display:contents}
-  .dim__num{grid-area:num}
   .dim__icon{grid-area:icon}
-  .dim__name{grid-area:name;margin-top:var(--space-2)}
+  .dim__count{display:none}
+  .dim__name{grid-area:name}
   .dim__q{grid-area:q}
+  .dim__num{font-size:4.5rem}
 }
-.dim:hover{background:var(--color-brand);color:var(--color-on-brand);transform:translateY(-4px);box-shadow:0 24px 50px -30px rgb(var(--color-brand-rgb) / .8)}
-.dim:hover .dim__num,.dim:hover .dim__q{color:#ffffffd9}
-.dim:hover .dim__icon{background:#ffffff24;color:var(--color-on-brand);transform:rotate(-8deg) scale(1.06)}
 
 /* Research standard */
-.standard__panel{position:relative;display:grid;gap:var(--space-7);padding:clamp(28px,5vw,88px) clamp(22px,5vw,88px);border-radius:var(--radius-lg);background:var(--color-surface);overflow:hidden}
-@media (width>=1024px){.standard__panel{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start;gap:clamp(48px,6vw,120px)}}
+.standard__panel{position:relative;display:grid;gap:var(--space-7);padding:clamp(28px,5vw,88px) clamp(22px,5vw,88px);border-radius:var(--radius-lg);background:var(--color-surface);overflow:hidden;isolation:isolate}
+.standard__panel:before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgb(var(--color-brand-rgb) / .16) 1px,#0000 1.4px);background-size:22px 22px;-webkit-mask-image:radial-gradient(70% 80% at 85% 50%,#000,#0000);mask-image:radial-gradient(70% 80% at 85% 50%,#000,#0000)}
+@media (width>=1024px){.standard__panel{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:center;gap:clamp(48px,6vw,120px)}}
 .standard__head{display:grid;justify-items:start;gap:var(--space-5)}
 .standard__title{font-size:var(--fs-h2);font-weight:var(--fw-semibold);line-height:var(--lh-heading);letter-spacing:-.02em;text-wrap:balance}
-.standard__intro{font-size:var(--fs-small);font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-muted)}
-.standard__list{margin-top:var(--space-3);border-top:1px solid var(--color-line)}
-.standard__list li{display:flex;align-items:baseline;gap:var(--space-4);padding-block:clamp(16px,1.6vw,22px);border-bottom:1px solid var(--color-line);font-size:clamp(1.25rem,1rem + 1vw,1.875rem);font-weight:var(--fw-semibold);line-height:1.2;letter-spacing:-.02em}
-.standard__n{flex:none;min-width:2ch;font-size:var(--fs-body);font-weight:var(--fw-bold);letter-spacing:0;font-variant-numeric:tabular-nums;color:var(--color-brand)}
-.standard__rule{display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-6);padding:clamp(16px,1.8vw,24px);border-radius:var(--radius-card);background:var(--color-ink);color:var(--color-on-brand);font-size:var(--fs-lead);font-weight:var(--fw-semibold);line-height:1.3;text-wrap:pretty}
-.standard__rule-icon{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:50%;background:var(--color-brand)}
-.standard__rule-icon .ico{width:22px;height:22px}
+.standard__text{max-width:30rem;font-size:var(--fs-lead);font-weight:var(--fw-medium);color:var(--color-text)}
+.standard__rule{display:flex;align-items:center;gap:var(--space-4);max-width:30rem;padding:14px 18px 14px 14px;border:1px solid rgb(var(--color-brand-rgb) / .25);border-radius:18px;background:var(--color-bg);font-size:var(--fs-body);font-weight:var(--fw-semibold);line-height:1.35}
+.standard__rule-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:50%;background:var(--color-brand);color:var(--color-on-brand)}
+.standard__rule-icon .ico{width:20px;height:20px}
+
+/* The publication: a report sheet whose three statements tick off in turn */
+.pub{position:relative;justify-self:center;width:min(100%,520px);margin:0;padding-block:12px 36px}
+.pub__sheet{position:relative;padding:clamp(22px,2.6vw,36px);border-radius:18px;background:var(--color-bg);box-shadow:0 1px 0 #0000000d,0 40px 70px -40px #00000059,0 0 0 1px #0000000f;transform:rotate(-1.5deg)}
+.pub:before{content:"";position:absolute;inset:26px -10px 22px 14px;border-radius:18px;background:#e7e0d8;transform:rotate(3deg);transition:opacity .7s var(--ease-out) .15s,transform 1s var(--ease-out) .15s}
+.pub__top{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding-bottom:var(--space-4);border-bottom:1px solid var(--color-line)}
+.pub__brand{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.pub__brand:before{content:"";flex:none;width:14px;height:14px;border:2px solid var(--color-ink);border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--color-brand) 0 2.5px,#0000 3px)}
+.pub__type{padding:4px 10px;border-radius:var(--radius-pill);background:rgb(var(--color-brand-rgb) / .09);color:var(--color-brand);font-size:.6875rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.pub__lines{display:grid;gap:8px;margin-block:var(--space-5)}
+.pub__lines span{height:10px;border-radius:5px;background:#efebe6}
+.pub__lines span:first-child{width:78%;height:16px;background:#e5dfd8}
+.pub__lines span:nth-child(3){width:64%}
+.pub__label{margin-bottom:var(--space-2);font-size:.75rem;font-weight:var(--fw-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-muted)}
+.pub__item{display:flex;align-items:center;gap:var(--space-3);padding-block:12px;border-top:1px solid var(--color-line);font-size:clamp(1rem,.92rem + .35vw,1.1875rem);font-weight:var(--fw-semibold);letter-spacing:-.01em}
+.pub__check{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--color-brand);color:var(--color-on-brand)}
+.pub__check svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.pub__check path{stroke-dasharray:20;stroke-dashoffset:0}
+.pub__stamp{position:absolute;right:clamp(-14px,-1vw,-6px);bottom:0;width:clamp(112px,10vw,132px);aspect-ratio:1;color:var(--color-brand);transform:rotate(-14deg)}
+.pub__stamp svg{width:100%;height:100%;overflow:visible}
+.pub__stamp-ring{fill:#fffffff2;stroke:currentColor;stroke-width:2}
+.pub__stamp-inner{fill:none;stroke:currentColor;stroke-width:1;stroke-dasharray:2 3}
+.pub__stamp text{fill:currentColor;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.12em}
+.pub__stamp-lock{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (width<=559px){.pub__stamp{right:-4px;bottom:-4px;width:100px}.pub__type{display:none}}
+
+/* Scroll-in sequence (only armed when the panel starts below the fold) */
+.pub.is-armed:not(.is-in) .pub__sheet{opacity:0;transform:translateY(40px) rotate(4deg)}
+.pub.is-armed:not(.is-in):before{opacity:0;transform:translateY(60px) rotate(8deg)}
+.pub.is-armed:not(.is-in) .pub__check{transform:scale(.3);background:#e5dfd8}
+.pub.is-armed:not(.is-in) .pub__check path{stroke-dashoffset:20}
+.pub.is-armed:not(.is-in) .pub__item span:last-child{opacity:.35}
+.pub.is-armed:not(.is-in) .pub__stamp{opacity:0;transform:rotate(-40deg) scale(1.6)}
+.pub.is-in .pub__sheet{transition:opacity .7s var(--ease-out),transform 1s var(--ease-out)}
+.pub.is-in .pub__check{transition:transform .5s cubic-bezier(.34,1.6,.64,1),background-color .3s var(--ease-out);transition-delay:calc(.7s + var(--i) * .35s)}
+.pub.is-in .pub__check path{transition:stroke-dashoffset .4s var(--ease-out);transition-delay:calc(.85s + var(--i) * .35s)}
+.pub.is-in .pub__item span:last-child{transition:opacity .4s var(--ease-out);transition-delay:calc(.7s + var(--i) * .35s)}
+.pub.is-in .pub__stamp{transition:opacity .25s var(--ease-out) 2s,transform .55s cubic-bezier(.34,1.5,.64,1) 2s}
 
 /* Contact */
 .cta{padding-block:0 var(--space-section)}
@@ -719,8 +765,8 @@ svg{display:block}
         <p class="section-lede" data-reveal style="--reveal-i:1">We start from the question, pick the methods that can answer it, then move through analysis and findings to decisions.</p>
       </header>
 
-      <ol class="pipe">
-        <li class="pipe__stage" data-reveal>
+      <ol class="pipe" data-seq>
+        <li class="pipe__stage" style="--s:0">
           <div class="pipe__head"><span class="pipe__step">01 · Chosen by the question</span></div>
           <h3 class="pipe__name">Methods</h3>
           <ul class="pipe__methods">
@@ -731,21 +777,21 @@ svg{display:block}
             <li><span class="pipe__m-icon" aria-hidden="true"><svg class="ico"><use href="#i-cpu"/></svg></span>Technology-assisted research</li>
           </ul>
         </li>
-        <li class="pipe__stage" data-reveal style="--reveal-i:1">
+        <li class="pipe__stage" style="--s:1">
           <div class="pipe__head"><span class="pipe__step">02</span><span class="pipe__icon" aria-hidden="true"><svg class="ico"><use href="#i-sparkle"/></svg></span></div>
           <div class="pipe__foot">
             <p class="pipe__tag"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"/></svg>AI-assisted</p>
             <h3 class="pipe__name">Analysis</h3>
           </div>
         </li>
-        <li class="pipe__stage" data-reveal style="--reveal-i:2">
+        <li class="pipe__stage" style="--s:2">
           <div class="pipe__head"><span class="pipe__step">03</span><span class="pipe__icon" aria-hidden="true"><svg class="ico"><use href="#i-bulb"/></svg></span></div>
           <div class="pipe__foot">
             <p class="pipe__tag"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>Limits stated</p>
             <h3 class="pipe__name">Findings</h3>
           </div>
         </li>
-        <li class="pipe__stage pipe__stage--end" data-reveal style="--reveal-i:3">
+        <li class="pipe__stage pipe__stage--end" style="--s:3">
           <div class="pipe__head"><span class="pipe__step">04</span><span class="pipe__icon" aria-hidden="true"><svg class="ico"><use href="#i-check"/></svg></span></div>
           <div class="pipe__foot">
             <p class="pipe__tag"><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Human judgement</p>
@@ -754,11 +800,7 @@ svg{display:block}
         </li>
       </ol>
 
-      <div class="ai-note" data-reveal>
-        <span class="ai-note__glow" aria-hidden="true"></span>
-        <p class="eyebrow eyebrow--on-dark">Our principle</p>
-        <p class="ai-note__text"><span>AI speeds up the analysis.</span> <span class="ai-note__tail">Judgement stays human.</span></p>
-      </div>
+      <p class="method__note" data-reveal><span>AI speeds up the analysis.</span> <span class="accent">Judgement stays human.</span></p>
     </div>
   </section>
 
@@ -772,14 +814,14 @@ svg{display:block}
       </header>
 
       <ol class="dims">
-        <li data-reveal style="--reveal-i:0"><div class="dim"><div class="dim__top"><span class="dim__num">01</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-target"/></svg></span></div><h3 class="dim__name">Relevance</h3><p class="dim__q">Solving the right problem?</p></div></li>
-        <li data-reveal style="--reveal-i:1"><div class="dim"><div class="dim__top"><span class="dim__num">02</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-users"/></svg></span></div><h3 class="dim__name">Reach</h3><p class="dim__q">Who received it?</p></div></li>
-        <li data-reveal style="--reveal-i:2"><div class="dim"><div class="dim__top"><span class="dim__num">03</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-hand"/></svg></span></div><h3 class="dim__name">Adoption</h3><p class="dim__q">Was it used or accepted?</p></div></li>
-        <li data-reveal style="--reveal-i:3"><div class="dim"><div class="dim__top"><span class="dim__num">04</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-trend"/></svg></span></div><h3 class="dim__name">Outcomes</h3><p class="dim__q">What changed?</p></div></li>
-        <li data-reveal style="--reveal-i:0"><div class="dim"><div class="dim__top"><span class="dim__num">05</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-flag"/></svg></span></div><h3 class="dim__name">Impact</h3><p class="dim__q">What longer-term difference?</p></div></li>
-        <li data-reveal style="--reveal-i:1"><div class="dim"><div class="dim__top"><span class="dim__num">06</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-leaf"/></svg></span></div><h3 class="dim__name">Sustainability</h3><p class="dim__q">Will the change last?</p></div></li>
-        <li data-reveal style="--reveal-i:2"><div class="dim"><div class="dim__top"><span class="dim__num">07</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-speaker"/></svg></span></div><h3 class="dim__name">Communication</h3><p class="dim__q">Did people understand it?</p></div></li>
-        <li data-reveal style="--reveal-i:3"><div class="dim"><div class="dim__top"><span class="dim__num">08</span><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-shield"/></svg></span></div><h3 class="dim__name">Evidence quality</h3><p class="dim__q">How strong is the evidence?</p></div></li>
+        <li data-reveal style="--reveal-i:0"><div class="dim"><span class="dim__num" aria-hidden="true">1</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-target"/></svg></span><span class="dim__count" aria-hidden="true"><b>01</b> / 08</span></div><h3 class="dim__name">Relevance</h3><p class="dim__q">Solving the right problem?</p></div></li>
+        <li data-reveal style="--reveal-i:1"><div class="dim"><span class="dim__num" aria-hidden="true">2</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-users"/></svg></span><span class="dim__count" aria-hidden="true"><b>02</b> / 08</span></div><h3 class="dim__name">Reach</h3><p class="dim__q">Who received it?</p></div></li>
+        <li data-reveal style="--reveal-i:2"><div class="dim"><span class="dim__num" aria-hidden="true">3</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-hand"/></svg></span><span class="dim__count" aria-hidden="true"><b>03</b> / 08</span></div><h3 class="dim__name">Adoption</h3><p class="dim__q">Was it used or accepted?</p></div></li>
+        <li data-reveal style="--reveal-i:3"><div class="dim"><span class="dim__num" aria-hidden="true">4</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-trend"/></svg></span><span class="dim__count" aria-hidden="true"><b>04</b> / 08</span></div><h3 class="dim__name">Outcomes</h3><p class="dim__q">What changed?</p></div></li>
+        <li data-reveal style="--reveal-i:0"><div class="dim"><span class="dim__num" aria-hidden="true">5</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-flag"/></svg></span><span class="dim__count" aria-hidden="true"><b>05</b> / 08</span></div><h3 class="dim__name">Impact</h3><p class="dim__q">What longer-term difference?</p></div></li>
+        <li data-reveal style="--reveal-i:1"><div class="dim"><span class="dim__num" aria-hidden="true">6</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-leaf"/></svg></span><span class="dim__count" aria-hidden="true"><b>06</b> / 08</span></div><h3 class="dim__name">Sustainability</h3><p class="dim__q">Will the change last?</p></div></li>
+        <li data-reveal style="--reveal-i:2"><div class="dim"><span class="dim__num" aria-hidden="true">7</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-speaker"/></svg></span><span class="dim__count" aria-hidden="true"><b>07</b> / 08</span></div><h3 class="dim__name">Communication</h3><p class="dim__q">Did people understand it?</p></div></li>
+        <li data-reveal style="--reveal-i:3"><div class="dim"><span class="dim__num" aria-hidden="true">8</span><div class="dim__top"><span class="dim__icon" aria-hidden="true"><svg class="ico"><use href="#i-shield"/></svg></span><span class="dim__count" aria-hidden="true"><b>08</b> / 08</span></div><h3 class="dim__name">Evidence quality</h3><p class="dim__q">How strong is the evidence?</p></div></li>
       </ol>
     </div>
   </section>
@@ -787,20 +829,35 @@ svg{display:block}
   <!-- Research standard -->
   <section class="section section--flush-top standard" id="standard" aria-labelledby="standard-title">
     <div class="container">
-      <div class="standard__panel" data-reveal>
+      <div class="standard__panel">
         <div class="standard__head">
           <p class="eyebrow">Our research standard</p>
           <h2 class="standard__title" id="standard-title">Clear about method. Honest about limits.</h2>
-        </div>
-        <div class="standard__body">
-          <p class="standard__intro">Every publication states</p>
-          <ol class="standard__list">
-            <li><span class="standard__n" aria-hidden="true">01</span>Its method</li>
-            <li><span class="standard__n" aria-hidden="true">02</span>What the evidence does not prove</li>
-            <li><span class="standard__n" aria-hidden="true">03</span>Its limitations</li>
-          </ol>
+          <p class="standard__text">Every publication states its method, what the evidence does not prove, and its limitations.</p>
           <p class="standard__rule"><span class="standard__rule-icon" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span>Client data never becomes public research without permission.</p>
         </div>
+
+        <figure class="pub" data-seq aria-hidden="true">
+          <div class="pub__sheet">
+            <div class="pub__top"><span class="pub__brand">Vistaar Public Research</span><span class="pub__type">Publication</span></div>
+            <div class="pub__lines"><span></span><span></span><span></span></div>
+            <p class="pub__label">Every publication states</p>
+            <ul class="pub__list">
+              <li class="pub__item" style="--i:0"><span class="pub__check"><svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7"/></svg></span><span>Its method</span></li>
+              <li class="pub__item" style="--i:1"><span class="pub__check"><svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7"/></svg></span><span>What the evidence does not prove</span></li>
+              <li class="pub__item" style="--i:2"><span class="pub__check"><svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7"/></svg></span><span>Its limitations</span></li>
+            </ul>
+          </div>
+          <div class="pub__stamp">
+            <svg viewBox="0 0 120 120">
+              <defs><path id="stamp-arc" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs>
+              <circle class="pub__stamp-ring" cx="60" cy="60" r="57"/>
+              <circle class="pub__stamp-inner" cx="60" cy="60" r="33"/>
+              <text><textPath href="#stamp-arc">CLIENT DATA · PERMISSION FIRST ·</textPath></text>
+              <g class="pub__stamp-lock" transform="translate(48 46)"><rect x="2" y="11" width="20" height="14" rx="3"/><path d="M6 11V8a6 6 0 0 1 12 0v3"/></g>
+            </svg>
+          </div>
+        </figure>
       </div>
     </div>
   </section>
@@ -943,6 +1000,23 @@ svg{display:block}
     window.addEventListener('resize',place);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
   });
+
+  // Scroll-in sequences: armed only when they start below the fold, so the page is complete at rest
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+    var seqIo=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting)return;
+        e.target.classList.add('is-in');
+        seqIo.unobserve(e.target);
+      });
+    },{threshold:.3});
+    [].slice.call(document.querySelectorAll('[data-seq]')).forEach(function(el){
+      if(el.getBoundingClientRect().top<window.innerHeight*.85)return;
+      el.classList.add('is-armed');
+      seqIo.observe(el);
+    });
+  })();
 
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var reveal=[].slice.call(document.querySelectorAll('[data-reveal]'));
