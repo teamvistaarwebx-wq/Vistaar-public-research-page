@@ -273,7 +273,36 @@ svg{display:block}
 .px__trigger:hover .px__num{color:color-mix(in srgb,var(--color-brand) 55%,transparent)}
 .px__body{position:relative;z-index:1;display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--px-dur) var(--ease-out)}
 .px__body-inner{min-height:0;overflow:hidden}
-.px__content{display:grid;gap:var(--space-3);padding:0 calc(44px + var(--px-gap)) clamp(18px,1.8vw,28px) calc(var(--num-w) + var(--px-gap) + 8px)}
+.px__content{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;column-gap:var(--space-6);padding:0 0 clamp(20px,2vw,30px) calc(var(--num-w) + var(--px-gap) + 8px)}
+.px__text{display:grid;align-content:start;gap:var(--space-3);min-width:0;padding-top:2px}
+/* Image card: swap .px__media's contents for an <img> to use photography or 3D renders */
+.px__media-wrap{width:clamp(150px,13vw,196px);margin:4px 12px 0 0;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.px__item.is-open:hover .px__media-wrap{transform:rotate(4deg) scale(1.04)}
+.px__media{position:relative;width:100%;aspect-ratio:16/11;margin:0;border-radius:16px;overflow:hidden;background:radial-gradient(120% 95% at 18% 12%,#fff 0,#f4efea 46%,#e4d9cf 100%);box-shadow:0 22px 34px -20px #00000059,inset 0 0 0 1px #ffffffb3;opacity:0;transform-origin:30% 85%}
+.px__media img{width:100%;height:100%;object-fit:cover}
+.px__media-ring{position:absolute;right:-22%;bottom:-48%;width:78%;aspect-ratio:1;border-radius:50%;border:10px solid rgb(var(--color-brand-rgb) / .08)}
+.px__media-glow{position:absolute;left:50%;top:62%;width:58%;aspect-ratio:1;border-radius:50%;translate:-50% -50%;background:radial-gradient(circle,rgb(var(--color-brand-rgb) / .32),#0000 68%);filter:blur(6px)}
+.px__media-badge{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44%;aspect-ratio:1;border-radius:26%;translate:-50% -50%;background:linear-gradient(150deg,#e2494e 0%,var(--color-brand) 46%,#7a1215 100%);color:var(--color-on-brand);box-shadow:0 16px 22px -12px rgb(var(--color-brand-rgb) / .85),inset 0 2px 0 #ffffff66,inset 0 -8px 14px #00000038;overflow:hidden}
+.px__media-badge:after{content:"";position:absolute;inset:0 0 52%;background:linear-gradient(#ffffff47,#fff0)}
+.px__media-badge .ico{position:relative;width:50%;height:50%;stroke-width:1.6}
+@keyframes px-in{
+  0%{opacity:0;transform:translate(-20px,40px) rotate(-34deg) scale(.5);filter:blur(8px)}
+  55%{opacity:1;filter:blur(0)}
+  76%{transform:translate(0,-3px) rotate(3deg) scale(1.03)}
+  100%{opacity:1;transform:rotate(-4deg) scale(1);filter:blur(0)}
+}
+@keyframes px-out{
+  0%{opacity:1;transform:rotate(-4deg) scale(1);filter:blur(0)}
+  100%{opacity:0;transform:translate(24px,-16px) rotate(28deg) scale(.68);filter:blur(6px)}
+}
+@keyframes px-badge-in{
+  0%{opacity:0;transform:rotate(30deg) scale(.4)}
+  60%{opacity:1}
+  100%{opacity:1;transform:none}
+}
+.px__item.is-leaving .px__media{animation:px-out .45s var(--ease-out) both}
+.px__item.is-open .px__media{animation:px-in .95s var(--ease-out) .06s both}
+.px__item.is-open .px__media-badge{animation:px-badge-in .8s cubic-bezier(.34,1.56,.64,1) .2s both}
 .px__desc{max-width:34rem;font-size:clamp(1rem,.95rem + .25vw,1.125rem);font-weight:var(--fw-medium);color:var(--color-text-soft)}
 .px__covers{display:flex;flex-wrap:wrap;gap:var(--space-2)}
 .px__covers li{display:inline-flex;align-items:center;gap:var(--space-2);min-height:32px;padding:5px 14px 5px 12px;border-radius:var(--radius-pill);background:var(--color-bg);font-size:.8125rem;font-weight:var(--fw-semibold);letter-spacing:.03em;line-height:1.2;text-transform:uppercase;color:var(--color-text);box-shadow:0 0 0 1px var(--color-line)}
@@ -291,7 +320,8 @@ svg{display:block}
 @media (width<=599px){
   .px__hl{left:calc(var(--space-2) * -1);right:calc(var(--space-2) * -1);border-radius:12px}
   .px__arrow{width:36px;height:36px}
-  .px__content{padding-right:0;padding-left:calc(var(--num-w) + var(--px-gap))}
+  .px__content{grid-template-columns:1fr;row-gap:var(--space-5);padding-left:calc(var(--num-w) + var(--px-gap))}
+  .px__media-wrap{width:150px}
   .px__item.is-open .px__name{transform:none}
 }
 }
@@ -440,6 +470,10 @@ svg{display:block}
   <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7L16 9.8"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 10h16"/><path d="m12 3 8 5H4l8-5z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-heart-hand" viewBox="0 0 24 24"><path d="M12 11.5c-1.6-2.4-5.5-2-5.5 1 0 2.4 3.2 4.2 5.5 6 2.3-1.8 5.5-3.6 5.5-6 0-3-3.9-3.4-5.5-1z" transform="translate(0 -5)"/><path d="M3 15h3l3.5 2.5H14a1.5 1.5 0 0 1 0 3H9"/><path d="M14 17.5 19 15a1.6 1.6 0 0 1 2 2.4L15 21H6l-3-2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></symbol>
+  <symbol id="i-devices" viewBox="0 0 24 24"><rect x="2.5" y="4" width="15" height="10.5" rx="1.5"/><path d="M6.5 18h6"/><rect x="15.5" y="9" width="6" height="11" rx="1.5"/><path d="M18.5 17.5h.01"/></symbol>
   <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/></symbol>
   <symbol id="i-hand" viewBox="0 0 24 24"><path d="M7 10v11"/><path d="M15 5.9 14 10h5.8a2 2 0 0 1 2 2.3l-1.3 7A2 2 0 0 1 18.5 21H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h3l4-8a2.5 2.5 0 0 1 4 3.9z"/></symbol>
@@ -597,7 +631,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-1" role="region" aria-labelledby="px-btn-1">
-            <div class="px__body-inner"><div class="px__content"><p class="px__desc">Did the intervention create meaningful outcomes?</p></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><p class="px__desc">Did the intervention create meaningful outcomes?</p></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-target"/></svg></span></figure></div></div></div>
           </div>
         </li>
         <li class="px__item" data-px-item>
@@ -609,7 +643,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-2" role="region" aria-labelledby="px-btn-2">
-            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Programmes</li><li style="--k:1">Infrastructure</li><li style="--k:2">Water</li><li style="--k:3">Agriculture</li><li style="--k:4">Citizen communication</li></ul></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Programmes</li><li style="--k:1">Infrastructure</li><li style="--k:2">Water</li><li style="--k:3">Agriculture</li><li style="--k:4">Citizen communication</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-landmark"/></svg></span></figure></div></div></div>
           </div>
         </li>
         <li class="px__item" data-px-item>
@@ -621,7 +655,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-3" role="region" aria-labelledby="px-btn-3">
-            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">CSR</li><li style="--k:1">NGO</li><li style="--k:2">Livelihood programmes</li><li style="--k:3">Community programmes</li></ul></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">CSR</li><li style="--k:1">NGO</li><li style="--k:2">Livelihood programmes</li><li style="--k:3">Community programmes</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-heart-hand"/></svg></span></figure></div></div></div>
           </div>
         </li>
         <li class="px__item" data-px-item>
@@ -633,7 +667,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-4" role="region" aria-labelledby="px-btn-4">
-            <div class="px__body-inner"><div class="px__content"><p class="px__desc">A structured layer over existing studies and data.</p></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><p class="px__desc">A structured layer over existing studies and data.</p></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-layers"/></svg></span></figure></div></div></div>
           </div>
         </li>
         <li class="px__item" data-px-item>
@@ -645,7 +679,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-5" role="region" aria-labelledby="px-btn-5">
-            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Perception</li><li style="--k:1">Trust</li><li style="--k:2">Journeys</li><li style="--k:3">Purchase behaviour</li></ul></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Perception</li><li style="--k:1">Trust</li><li style="--k:2">Journeys</li><li style="--k:3">Purchase behaviour</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-bag"/></svg></span></figure></div></div></div>
           </div>
         </li>
         <li class="px__item" data-px-item>
@@ -657,7 +691,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-6" role="region" aria-labelledby="px-btn-6">
-            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Adoption</li><li style="--k:1">Search</li><li style="--k:2">Social</li><li style="--k:3">E-commerce behaviour</li></ul></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Adoption</li><li style="--k:1">Search</li><li style="--k:2">Social</li><li style="--k:3">E-commerce behaviour</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-devices"/></svg></span></figure></div></div></div>
           </div>
         </li>
         <li class="px__item" data-px-item>
@@ -669,7 +703,7 @@ svg{display:block}
             </button>
           </h3>
           <div class="px__body" id="px-body-7" role="region" aria-labelledby="px-btn-7">
-            <div class="px__body-inner"><div class="px__content"><ul class="px__covers"><li style="--k:0">Readiness</li><li style="--k:1">Knowledge systems</li><li style="--k:2">Human and AI workflows</li></ul></div></div>
+            <div class="px__body-inner"><div class="px__content"><div class="px__text"><ul class="px__covers"><li style="--k:0">Readiness</li><li style="--k:1">Knowledge systems</li><li style="--k:2">Human and AI workflows</li></ul></div><div class="px__media-wrap" aria-hidden="true"><figure class="px__media"><span class="px__media-ring"></span><span class="px__media-glow"></span><span class="px__media-badge"><svg class="ico"><use href="#i-sparkle"/></svg></span></figure></div></div></div>
           </div>
         </li>
       </ol>
@@ -863,13 +897,21 @@ svg{display:block}
       var top=0;
       for(var i=0;i<active;i++)top+=items[i].querySelector('.px__trigger').offsetHeight+1;
       var it=items[active];
-      var h=it.querySelector('.px__trigger').offsetHeight+it.querySelector('.px__body-inner').scrollHeight;
+      var h=it.querySelector('.px__trigger').offsetHeight+it.querySelector('.px__content').offsetHeight;
       hl.style.transform='translateY('+top+'px)';
       hl.style.height=h+'px';
       list.classList.add('has-hl');
     }
+    var leaveTimers=[];
     function open(i){
       if(i===active)return;
+      if(active>=0){
+        var prev=items[active];
+        prev.classList.add('is-leaving');
+        clearTimeout(leaveTimers[active]);
+        leaveTimers[active]=setTimeout(function(){prev.classList.remove('is-leaving')},500);
+      }
+      if(i>=0){clearTimeout(leaveTimers[i]);items[i].classList.remove('is-leaving')}
       active=i;
       items.forEach(function(it,j){
         it.classList.toggle('is-open',j===i);
